@@ -13,7 +13,7 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 //       seedInvoices(),
 //       seedRevenue(),
 //     ]);
-//
+
 //     return Response.json({ message: 'Database seeded successfully' });
 //   } catch (error) {
 //     return Response.json({ error }, { status: 500 });
