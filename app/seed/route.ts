@@ -20,6 +20,7 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 //   }
 // }
 
+// 해당 코드에서 반복 시딩 혹은 추가 삽입이 발생했음을 알 수 있다.
 async function seedUsers(sqlClient = sql) {
   await sqlClient`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
   await sqlClient`
@@ -78,7 +79,6 @@ async function seedInvoices(sqlClient = sql) {
       date DATE NOT NULL
     );
   `;
-
   await Promise.all(
     invoices.map(
       (invoice) => sqlClient`
