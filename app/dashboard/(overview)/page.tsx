@@ -1,13 +1,17 @@
-import { Card } from "../ui/dashboard/cards"
-import RevenueChart from "../ui/dashboard/revenue-chart"
-import LatestInvoices from "../ui/dashboard/latest-invoices"
-import { lusitana } from "../ui/fonts"
-import { fetchRevenue, fetchLatestInvoices, fetchCardData } from "../lib/data"
+import { Card } from "../../ui/dashboard/cards"
+import RevenueChart from "../../ui/dashboard/revenue-chart"
+import LatestInvoices from "../../ui/dashboard/latest-invoices"
+import { lusitana } from "../../ui/fonts"
+// import { fetchRevenue, fetchLatestInvoices } from "../../lib/data"
+import { fetchCardData } from "../../lib/data"
+import { Suspense } from "react"
+import { RevenueChartSkeleton, LatestInvoicesSkeleton } from "@/app/ui/skeletons"
 // import { checkInvoiceDuplicates } from "../lib/data"
 
+
 export default async function Page() {
-    const revenue = await fetchRevenue();
-    const latestInvocies = await fetchLatestInvoices();
+    // const revenue = await fetchRevenue();
+    // const latestInvocies = await fetchLatestInvoices();
     const { numberOfInvoices, numberOfCustomers, totalPaidInvoices, totalPendingInvoices } = await fetchCardData();
 
     // await checkInvoiceDuplicates();
@@ -21,9 +25,13 @@ export default async function Page() {
                 <Card title="Total customers" value={numberOfCustomers} type="customers" />
             </div>
             <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-                <RevenueChart revenue={revenue} />
-                <LatestInvoices latestInvoices={latestInvocies} />
-
+                {/* <RevenueChart revenue={revenue} /> */}
+                <Suspense fallback={<RevenueChartSkeleton />}>
+                    <RevenueChart />
+                </Suspense>
+                <Suspense fallback={<LatestInvoicesSkeleton />}>
+                    <LatestInvoices />
+                </Suspense>
             </div>
         </main>
     )

@@ -31,7 +31,6 @@ export async function fetchRevenue() {
 }
 
 // invocies의 갯수를 확인해서 실제 placeholder-data.ts의 것과 비교함
-//
 export async function checkInvoiceDuplicates() {
   const result = await sql`
     SELECT
